@@ -51,7 +51,7 @@ public class BibliotecaApp {
                     break;
                 case 4:
                     //verLivrosEmprestados(usuario);
-                    verLE(usuario);
+                    verLivrosComData(usuario);
                     break;
                 case 5:
                     adicionarLivro();
@@ -149,8 +149,8 @@ public class BibliotecaApp {
         }
     }
 
-    public void verLE(Usuario usuario){
-        Map<String, String> livros = usuario.getLivrosEmprestadosss();
+    public void verLivrosComData(Usuario usuario){
+        Map<String, String> livros = usuario.getDatasEmprestimo();
 
         if(livros.isEmpty()){
             System.out.println("not foud");
