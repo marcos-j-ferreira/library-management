@@ -1,119 +1,13 @@
-import java.util.Scanner;
+import model.Livro;
+import model.Usuario;
+import service.GerenciadorEmprestimos;
+import repository.AcervoBiblioteca;
+
 import java.util.HashMap;
 import java.util.Map;
-import java.util.ArrayList;
 import java.util.List;
-
-class Livro { 
-    private String titulo;
-    private boolean disponivel;
-
-    public Livro(String titulo) {
-        this.titulo = titulo;
-        this.disponivel = true; 
-    }
-
-    public String getTitulo() {
-        return titulo;
-    }
-
-    public boolean isDisponivel() {
-        return disponivel;
-    }
-
-    public void setDisponivel(boolean disponivel) {
-        this.disponivel = disponivel;
-    }
-}
-
-class AcervoBiblioteca {
-    private Map<Integer, Livro> livros = new HashMap<>();
-    private int proximoId = 1;
-
-    public int adicionarLivro(String titulo) {
-        int id = proximoId++;
-        livros.put(id, new Livro(titulo));
-        return id;
-    }
-
-    public Map<Integer, Livro> getTodosLivros() {
-    return new HashMap<>(livros); // Retorna uma cópia
-    }
-
-    public boolean removerLivro(int id) {
-        if (livros.containsKey(id)) {
-            livros.remove(id);
-            return true;
-        }
-        return false;
-    }
-
-    public Livro getLivro(int id) {
-        return livros.get(id);
-    }
-
-    public void listarLivros() {
-        System.out.println("==== Acervo da Biblioteca ====");
-        for (Map.Entry<Integer, Livro> entry : livros.entrySet()) {
-            System.out.println("ID: " + entry.getKey());
-            System.out.println("Título: " + entry.getValue().getTitulo());
-            System.out.println("Disponível: " + (entry.getValue().isDisponivel() ? "Sim" : "Não"));
-            System.out.println("-----------------------------");
-        }
-    }
-}
-
-class Usuario {
-    private String nome;
-    private int matricula;
-    private List<String> livrosEmprestados = new ArrayList<>();
-
-    public Usuario(String nome, int matricula) {
-        this.nome = nome;
-        this.matricula = matricula;
-    }
-
-    public void emprestarLivro(String titulo) {
-        livrosEmprestados.add(titulo);
-    }
-
-    public boolean devolverLivro(String titulo) {
-        return livrosEmprestados.remove(titulo);
-    }
-
-    public List<String> getLivrosEmprestados() {
-        return new ArrayList<>(livrosEmprestados); 
-    }
-}
-
-class GerenciadorEmprestimos {
-    private AcervoBiblioteca acervo;
-    
-    public GerenciadorEmprestimos(AcervoBiblioteca acervo) {
-        this.acervo = acervo;
-    }
-
-    public boolean emprestarLivro(Usuario usuario, int livroId) {
-        Livro livro = acervo.getLivro(livroId);
-        if (livro != null && livro.isDisponivel()) {
-            livro.setDisponivel(false);
-            usuario.emprestarLivro(livro.getTitulo());
-            return true;
-        }
-        return false;
-    }
-
-    public boolean devolverLivro(Usuario usuario, int livroId) {
-        Livro livro = acervo.getLivro(livroId);
-        if (livro != null && !livro.isDisponivel() && 
-            usuario.getLivrosEmprestados().contains(livro.getTitulo())) {
-            livro.setDisponivel(true);
-            usuario.devolverLivro(livro.getTitulo());
-            return true;
-        }
-        return false;
-    }
-}
+import java.util.ArrayList;
+import java.util.Scanner;
 
 
 public class BibliotecaApp {
