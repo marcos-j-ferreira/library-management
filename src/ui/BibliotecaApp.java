@@ -50,7 +50,8 @@ public class BibliotecaApp {
                     devolverLivro(usuario);
                     break;
                 case 4:
-                    verLivrosEmprestados(usuario);
+                    //verLivrosEmprestados(usuario);
+                    verLE(usuario);
                     break;
                 case 5:
                     adicionarLivro();
@@ -144,6 +145,21 @@ public class BibliotecaApp {
             System.out.println("\n=== SEUS LIVROS EMPRESTADOS ===");
             for(String livro : livros) {
                 System.out.println("- " + livro);
+            }
+        }
+    }
+
+    public void verLE(Usuario usuario){
+        Map<String, String> livros = usuario.getLivrosEmprestadosss();
+
+        if(livros.isEmpty()){
+            System.out.println("not foud");
+        }else{
+            System.out.println("\n === SEUS LIVROS EMPRESTAODS COM DATA DE EMPRESTIMO ===");
+            int numero = 0;
+            for ( Map.Entry<String, String> entry : livros.entrySet()){
+                numero++;
+                System.out.println(numero+ " - "+ entry.getKey() + ": "+ entry.getValue());
             }
         }
     }
